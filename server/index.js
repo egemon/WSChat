@@ -1,6 +1,5 @@
 var WebSocketConstructor = require('ws');
 var clients = [];
-// console.log('WebSocketServer = ',WebSocketConstructor);
 
 var	wss = new WebSocketConstructor.Server({port:8081});
 

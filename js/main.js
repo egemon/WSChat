@@ -25,4 +25,3 @@ $('#send-button').click(function(event) {
 	ws.send($('#input-text').val());
 	$('#input-text').val('');
 });
-
