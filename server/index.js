@@ -4,20 +4,13 @@ var clients = [];
 
 var	wss = new WebSocketConstructor.Server({port:8081});
 
-console.log('wss.on = ',wss.on);
-console.log('wss._events = ',wss._events);
 	wss.on('connection', function(ws) {
 		console.log('New Connection');
 		clients.push(ws);
 
 		ws.on('message', function(event) {
 			console.log('Message come');
-			var msgText = JSON.parse(event);
-			// sendAll(msgText);
-			ws.send(JSON.stringify({
-			type:'message',
-			msgText:msgText
-		}));
+			wss.broadcast(event);
 		});
 
 		ws.on('close', function(event) {
@@ -26,11 +19,8 @@ console.log('wss._events = ',wss._events);
 	});
 
 
-function sendAll (msgText) {
-	clients.forEach(function  (ws) {
-		ws.send(JSON.stringify({
-			type:'message',
-			msgText:msgText
-		}));
+wss.broadcast = function (data) {
+	wss.clients.forEach(function each(client) {
+		client.send(data);
 	});
-}
+};

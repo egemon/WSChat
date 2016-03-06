@@ -7,8 +7,7 @@ ws.onopen	= function  () {
 
 ws.onmessage = function  (event) {
 	console.log('Message comes \n msg = ', event);
-	var msgText = JSON.parse(event.data);
-	$('#output-container').text += msgText;
+	$('#output-container').append('<p>' + event.data + '</p>');
 };
 
 ws.onclose	= function  () {
@@ -21,13 +20,9 @@ ws.onerror = function  () {
 };
 
 $('#send-button').click(function(event) {
-	console.log(event);
 	event.preventDefault();
 	console.log('send msg');
-	ws.send(JSON.stringify ({
-        type: 'message',
-        msgText: $('#input-text').text
-    }));
-	$('#input-text').text = '';
+	ws.send($('#input-text').val());
+	$('#input-text').val('');
 });
 
